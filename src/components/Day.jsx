@@ -8,7 +8,7 @@ export default function Day({ day, rowIdx }) {
       ? "todayDate text-white rounded-full w-7"
       : "";
   }
-  const { setDaySelected, setShowAddEvent } = useContext(GlobalContext);
+  const { setDaySelected, setShowAddEvent, savedEvents} = useContext(GlobalContext);
   return (
     <div className=" border calendarBorder flex flex-col">
       <header className="flex flex-col items-center">

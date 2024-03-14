@@ -4,20 +4,34 @@ const labelClass = ["indigo", "gray", "green", "blue", "red", "purple"];
 // import dayjs from "dayjs";
 
 export default function AddEvent() {
-  const { setShowAddEvent, daySelected } = useContext(GlobalContext);
+  const { setShowAddEvent, daySelected, dispatchCalEvent} = useContext(GlobalContext);
   const [description, setDescription] = useState("");
   const [selectedLabel, setSelectedLabel] = useState(labelClass[0]);
   const [title, setTitle] = useState("");
 
-  const handleSubmit = (e) => {
-    console.log(e);
+ // const handleSubmit = (e) => {
+//  console.log(e);
     // const formData = new FormData(e.currentTarget)
-  }
+// }
 
   // debug
   // const currentDate = daySelected ? daySelected : dayjs();
 
   // end
+
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const calendarEvent ={
+      title,
+      description,
+      label: selectedLabel,
+      day: daySelected.valueOf(),
+      id: Date.now()
+    };
+    dispatchCalEvent({type: "push", payload: calendarEvent});
+    setShowAddEvent(false);
+  }
   return (
     <div className="h-screen w-full fixed left-0 top-0 flex justify-center items-center">
       <form className="bg-white rounded-lg shadow-2xl w-1/4" onSubmit={handleSubmit}>
@@ -81,6 +95,7 @@ export default function AddEvent() {
         <footer className="flex justify-end w-100 border-t p-3 mt-5">
           <button
             type="submit"
+            onClick={handleSubmit}
             className="bg-blue-500 hover:bg-blue-600 px-6 py-2 rounded text-white"
           >
             Save
